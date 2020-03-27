@@ -1,7 +1,7 @@
 package ru.geekbrains.paymentservice.repository;
 
-
 import org.springframework.stereotype.Component;
+
 import ru.geekbrains.soap.payment.Payment;
 
 import java.util.ArrayList;
@@ -11,9 +11,7 @@ import java.util.stream.Collectors;
 @Component
 public class PaymentRepository {
 
-    private List<Payment> payments = new ArrayList<>();
-
-    PaymentRepository() {
+    public List<Payment> getPayments(String country) {
 
         Payment payment1 = new Payment();
         payment1.setId(1);
@@ -30,16 +28,20 @@ public class PaymentRepository {
         payment3.setName("WebMoney");
         payment3.setCountry("Russia");
 
-        payments.add(payment1);
-        payments.add(payment2);
-        payments.add(payment3);
+        Payment payment4 = new Payment();
+        payment4.setId(4);
+        payment4.setName("YandexMoney");
+        payment4.setCountry("Russia");
 
-    }
-
-    public List<Payment> getPayments(String country) {
-        return payments.stream().filter(
+        return new ArrayList<Payment>() {{
+            add(payment1);
+            add(payment2);
+            add(payment3);
+            add(payment4);
+        }}.stream().filter(
             payment -> payment.getCountry().contains(country)
         ).collect(Collectors.toList());
+
     }
 
 }
